@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createContext } from 'react';
-import { hasChildren, idEquals, isGroup } from '../utils/compare';
+import { idEquals, isGroup } from '../utils/compare';
 import { initialLiveFilters } from '../data';
 
 // Context
@@ -28,39 +28,43 @@ export default (state = {}, action = {}) => {
   const copy = getCopy(state);
   // ADD
   if (type === ADD) {
-    const addNewChild = ({ id, thingToAdd }) => (obj) => {
-      if (idEquals(id)(obj)) obj.children = obj.children.concat(thingToAdd);
-      else if (hasChildren(obj)) obj.children.forEach(addNewChild({ id, thingToAdd }));
-    };
     const { filterGroup, thingToAdd } = payload;
-    [copy].forEach(addNewChild({ id: filterGroup.id, thingToAdd }));
+    const hasThatFilterGroupId = idEquals(filterGroup.id);
+    const addNewChild = (child) => {
+      if (isGroup(child)) {
+        if (hasThatFilterGroupId(child)) child.children = child.children.concat(thingToAdd);
+        else child.children.forEach(addNewChild);
+      }
+    };
+    [copy].forEach(addNewChild);
     return copy;
   }
   // UPDATE
   // We may not need any more update methods.
-  // Toggling the filter group operation may be enough for now.
+  // Toggling the filter group operation might be enough for now.
   if (type === UPDATE) return state;
   // REMOVE
   if (type === REMOVE) {
-    const removeFilterThing = id => (item, index, array) => {
-      const hasThatId = idEquals(id);
-      if (hasChildren(item)) {
-        if (hasThatId(item)) array.splice(index, 1);
-        else item.children.forEach(removeFilterThing(id));
-      } else if (hasThatId(item)) array.splice(index, 1);
-    };
     const { object } = payload;
-    copy.children.forEach(removeFilterThing(object.id));
+    const hasThatId = idEquals(object.id);
+    const removeFilterThing = (child, index, array) => {
+      if (hasThatId(child)) array.splice(index, 1);
+      else if (isGroup(child)) {
+        if (hasThatId(child)) array.splice(index, 1);
+        else child.children.forEach(removeFilterThing);
+      }
+    };
+    copy.children.forEach(removeFilterThing);
     return copy;
   }
   // TOGGLE
   if (type === TOGGLE_OPERATOR) {
-    const { object } = payload;
+    const { filterGroup } = payload;
+    const hasThatFilterGroupId = idEquals(filterGroup.id);
     const toggleFilterGroup = (child) => {
       if (isGroup(child)) {
-        const hasThatId = idEquals(object.id);
-        if (hasThatId(child)) child.operator = toggle(child);
-        else if (child.children.length > 0) child.children.forEach(toggleFilterGroup);
+        if (hasThatFilterGroupId(child)) child.operator = toggle(child);
+        else child.children.forEach(toggleFilterGroup);
       }
     };
     [copy].forEach(toggleFilterGroup);

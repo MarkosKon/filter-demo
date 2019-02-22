@@ -30,11 +30,7 @@ const FilterGroup = ({
       <Heading>{parent ? 'Active Filter object' : 'FilterGroup'}</Heading>
       <Text as="p" mt={2}>
         {hasAndOperator(filterGroup) ? '(AND)' : '(OR)'}
-        <Button
-          ml={3}
-          bg="orangered"
-          onClick={() => dispatch(toggleOperator({ object: filterGroup }))}
-        >
+        <Button ml={3} bg="orangered" onClick={() => dispatch(toggleOperator({ filterGroup }))}>
           Change
         </Button>
         {codeVisible ? (
