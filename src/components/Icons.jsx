@@ -12,7 +12,14 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
-  faHeart, faLink, faBars, faTimes,
+  faHeart,
+  faLink,
+  faBars,
+  faTimes,
+  faPlus,
+  faTrash,
+  faCode,
+  faToggleOn,
 } from '@fortawesome/free-solid-svg-icons';
 
 const FontAwesomeIcon = styled(Base)`
@@ -30,6 +37,10 @@ const Heart = props => <FontAwesomeIcon {...props} icon={faHeart} />;
 const FaLink = props => <FontAwesomeIcon {...props} icon={faLink} />;
 const FaBars = props => <FontAwesomeIcon {...props} icon={faBars} />;
 const FaTimes = props => <FontAwesomeIcon {...props} icon={faTimes} />;
+const FaPlus = props => <FontAwesomeIcon {...props} icon={faPlus} />;
+const FaTrash = props => <FontAwesomeIcon {...props} icon={faTrash} />;
+const FaCode = props => <FontAwesomeIcon {...props} icon={faCode} />;
+const FaToggleOn = props => <FontAwesomeIcon {...props} icon={faToggleOn} />;
 
 export {
   Facebook,
@@ -43,4 +54,8 @@ export {
   FaLink,
   FaBars,
   FaTimes,
+  FaPlus,
+  FaTrash,
+  FaCode,
+  FaToggleOn,
 };

@@ -5,14 +5,11 @@ import styled from 'styled-components';
 import {
   Button, TopRight, Box, Heading, Text,
 } from './Primitives';
+
+import { FaPlus, FaTrash, FaCode } from './Icons';
 import Filter from './Filter';
 import { LiveFilterContext, toggleOperator, remove } from '../ducks/live-filters';
 import { isGroup, hasAndOperator } from '../utils/compare';
-
-const Overflowed = styled(Box)`
-  overflow: auto;
-  max-height: 120px;
-`;
 
 const Container = styled(Box)`
   position: relative;
@@ -27,11 +24,15 @@ const FilterGroup = ({
   } = useContext(LiveFilterContext);
   return (
     <Container bg={bg} color="white" p={4} mb={3}>
-      <Heading>{parent ? 'Active Filter object' : 'FilterGroup'}</Heading>
-      <Text as="p" mt={2}>
-        {hasAndOperator(filterGroup) ? '(AND)' : '(OR)'}
+      <Heading>
+        {parent ? 'Active Filter object - ' : 'FilterGroup - '}
+        <Box as="span" style={{ textDecoration: 'underline' }}>
+          {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
+        </Box>
+      </Heading>
+      <Box my={3}>
         <Button ml={3} bg="orangered" onClick={() => dispatch(toggleOperator({ filterGroup }))}>
-          Change
+          Toggle
         </Button>
         {codeVisible ? (
           <Button bg="pink" ml={2} color="black" onClick={() => setCodeVisible(false)}>
@@ -39,30 +40,30 @@ const FilterGroup = ({
           </Button>
         ) : (
           <Button bg="pink" ml={2} color="black" onClick={() => setCodeVisible(true)}>
-            Show code
+            <FaCode />
           </Button>
         )}
-      </Text>
+      </Box>
       {!parent && (
         <TopRight>
           <Button bg="black" onClick={() => dispatch(remove({ object: filterGroup }))}>
-            Remove
+            <FaTrash />
           </Button>
         </TopRight>
       )}
       {codeVisible && (
-        <Overflowed my={3} p={2} bg="#715f5b" color="white">
+        <Box my={3} p={2} bg="#715f5b" color="white">
           <Heading as="h4" fontSize={3}>
             Raw object:
           </Heading>
           <Text as="pre">{JSON.stringify(filterGroup, null, 2)}</Text>
-        </Overflowed>
+        </Box>
       )}
-      <Box bg="#715f5b" color="white" p={2}>
+      <Box bg="#715f5b" color="white" p={3}>
         <Heading as="h4" fontSize={3} p={3}>
-          Children:
+          Children
           <Button bg="orangered" ml={2} onClick={() => openModal(filterGroup)}>
-            Add
+            <FaPlus />
           </Button>
         </Heading>
         {filterGroup.children.map((thing) => {
