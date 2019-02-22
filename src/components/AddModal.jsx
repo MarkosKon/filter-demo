@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useContext } from 'react';
-// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import ReactSelect from 'react-select';
@@ -59,7 +58,6 @@ const AddModal = (props) => {
               placeholder="Predefined filters"
               options={predefinedFilterOptions.current}
               onChange={({ object }) => {
-                // add({ filterGroup: modalInitiator, thingToAdd: object });
                 dispatch(add({ filterGroup: modalInitiator, thingToAdd: object }));
                 onRequestClose();
               }}
@@ -78,10 +76,6 @@ const AddModal = (props) => {
                   operator: 'AND',
                   children: [],
                 };
-                // add({
-                //   filterGroup: modalInitiator,
-                //   thingToAdd: toAdd,
-                // });
                 dispatch(
                   add({
                     filterGroup: modalInitiator,

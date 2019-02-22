@@ -20,13 +20,7 @@ const Filter = ({ filter }) => {
     <Container bg="pink" color="black" p={4} mb={3}>
       <Heading>Filter</Heading>
       <TopRight>
-        <Button
-          bg="black"
-          onClick={() => {
-            // remove(filter);
-            dispatch(remove({ object: filter }));
-          }}
-        >
+        <Button bg="black" onClick={() => dispatch(remove({ object: filter }))}>
           Remove
         </Button>
       </TopRight>
