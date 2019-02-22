@@ -26,6 +26,7 @@ const toggle = ({ operator }) => (operator === 'AND' ? 'OR' : 'AND');
 export default (state = {}, action = {}) => {
   const { type, payload } = action;
   const copy = getCopy(state);
+  // ADD
   if (type === ADD) {
     const addNewChild = ({ id, thingToAdd }) => (obj) => {
       if (idEquals(id)(obj)) obj.children = obj.children.concat(thingToAdd);
@@ -35,9 +36,11 @@ export default (state = {}, action = {}) => {
     [copy].forEach(addNewChild({ id: filterGroup.id, thingToAdd }));
     return copy;
   }
+  // UPDATE
   // We may not need any more update methods.
   // Toggling the filter group operation may be enough for now.
   if (type === UPDATE) return state;
+  // REMOVE
   if (type === REMOVE) {
     const removeFilterThing = id => (item, index, array) => {
       const hasThatId = idEquals(id);
@@ -50,16 +53,17 @@ export default (state = {}, action = {}) => {
     copy.children.forEach(removeFilterThing(object.id));
     return copy;
   }
+  // TOGGLE
   if (type === TOGGLE_OPERATOR) {
     const { object } = payload;
-    const toggleReducer = (child) => {
+    const toggleFilterGroup = (child) => {
       if (isGroup(child)) {
-        if (idEquals(object.id)(child)) child.operator = toggle(child);
-        else copy.children.forEach(toggleReducer);
+        const hasThatId = idEquals(object.id);
+        if (hasThatId(child)) child.operator = toggle(child);
+        else if (child.children.length > 0) child.children.forEach(toggleFilterGroup);
       }
     };
-    if (idEquals(object.id)(copy)) copy.operator = toggle(copy);
-    else copy.children.forEach(toggleReducer);
+    [copy].forEach(toggleFilterGroup);
     return copy;
   }
   return state;
