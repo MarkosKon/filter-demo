@@ -1,36 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  initializeOperationsG, equals, lessThan, greaterThan,
+} from 'compare-object-field';
 
-import { Box, Heading, Text } from '../components/Primitives';
-import Link from '../components/Link';
+import AddModal from '../components/AddModal';
+import FilterGroup from '../components/FilterGroup';
+import Products from '../components/Products';
 import Layout from '../layouts/Layout';
 import SEO from '../components/SEO';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
-    <Box height="calc(100vh - 100px)" pt={5}>
-      <Heading as="h1" variant="h1">
-        Hi people
-      </Heading>
-      <Text as="p" variant="wide">
-        Welcome to your new Gatsby site.
-      </Text>
-      <Text as="p" variant="normal" pb={3}>
-        Now go build something great.
-      </Text>
-      <ul>
-        <li>
-          <Link to="/page-2/">A simple slider</Link>
-        </li>
-        <li>
-          <Link to="/aos/">Animation on scroll example</Link>
-        </li>
-        <li>
-          <Link to="/parallax/">Parallax example with react-spring</Link>
-        </li>
-      </ul>
-    </Box>
-  </Layout>
-);
+import { LiveFilterContext } from '../ducks/live-filters';
+import { products } from '../data';
+
+const operations = {
+  EQUALS: equals,
+  LESS_THAN: lessThan,
+  MORE_THAN: greaterThan,
+};
+const addFilterGroup = initializeOperationsG(operations);
+
+const IndexPage = () => {
+  const {
+    liveFilters: { liveFilters },
+  } = useContext(LiveFilterContext);
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [modalInitiator, setModalInitiator] = useState({});
+
+  const showProducts = () => {
+    const satisfiesFilterGroup = addFilterGroup(liveFilters);
+    const result = products.filter(satisfiesFilterGroup);
+    setFilteredProducts(result);
+  };
+
+  const ONCE = [];
+  useEffect(() => showProducts(), ONCE);
+
+  return (
+    <Layout>
+      <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
+      <FilterGroup
+        filterGroup={liveFilters}
+        bg="#2d2d2d"
+        parent
+        openModal={(initiator) => {
+          setModalInitiator(initiator);
+          setAddModalOpen(true);
+        }}
+      />
+      <Products products={filteredProducts} showProducts={showProducts} />
+      <AddModal
+        isOpen={addModalOpen}
+        modalInitiator={modalInitiator}
+        onRequestClose={() => setAddModalOpen(false)}
+      />
+    </Layout>
+  );
+};
 
 export default IndexPage;

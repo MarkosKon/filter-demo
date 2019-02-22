@@ -2,19 +2,20 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import AppContainer from './src/components/AppContainer';
 import theme from './src/layouts/theme';
 import GlobalStyle from './src/layouts/GlobalStyle';
 import 'normalize.css';
 import 'typeface-playfair-display';
 import 'typeface-open-sans';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+// import 'slick-carousel/slick/slick.css';
+// import 'slick-carousel/slick/slick-theme.css';
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
-    <>
+    <AppContainer>
       <GlobalStyle />
       {element}
-    </>
+    </AppContainer>
   </ThemeProvider>
 );

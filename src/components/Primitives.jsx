@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import {
-  Flex as BaseFlex, Box as BaseBox, Heading as BaseHeading, Text as BaseText,
+  Flex as BaseFlex,
+  Box as BaseBox,
+  Heading as BaseHeading,
+  Text as BaseText,
+  Button as BaseButton,
 } from 'rebass';
 import {
   height, flexBasis, minHeight, variant,
@@ -26,6 +30,13 @@ Centered.defaultProps = {
   flexDirection: 'column',
   height: '100%',
 };
+// Top Right
+const TopRight = styled(Box)`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 20px;
+`;
 // Heading.
 const headingStyle = variant({
   key: 'headings',
@@ -45,7 +56,9 @@ const textStyle = variant({
 const Text = styled(BaseText)`
   ${textStyle}
 `;
+const Button = styled(BaseButton)`
+  cursor: pointer;
+`;
 export {
-  Box, Flex, Centered, Heading, Text,
+  Box, Flex, Centered, TopRight, Heading, Text, Button,
 };
-export { Button } from 'rebass';
