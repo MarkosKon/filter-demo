@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { boxShadow } from 'styled-system';
@@ -17,7 +17,6 @@ import { isGroup, hasAndOperator } from '../utils/compare';
 const Container = styled(Box)`
   ${boxShadow}
   position: relative;
-  background-color: #715e5b;
   color: white;
   min-height: 80px;
 `;
@@ -46,48 +45,44 @@ const FilterGroup = ({ filterGroup, parent, openModal }) => {
     liveFilters: { dispatch },
   } = useContext(LiveFilterContext);
   return (
-    <Container p={4} mb={3} boxShadow="extreme">
+    <Container bg="wood" p={4} mb={3} boxShadow="extreme">
       <Flex flexWrap="wrap" justifyContent="flex-end" alignItems="center">
         {parent ? (
-          <Button order={1} bg="orangered" onClick={() => setFiltersVisible(!filtersVisible)}>
+          <Button order={1} bg="amaranth" onClick={() => setFiltersVisible(!filtersVisible)}>
             <FaFilter />
           </Button>
         ) : (
-          <Button
-            order={1}
-            bg="orangered"
-            onClick={() => dispatch(remove({ object: filterGroup }))}
-          >
+          <Button order={1} bg="amaranth" onClick={() => dispatch(remove({ object: filterGroup }))}>
             <FaTrash />
           </Button>
         )}
         {filtersVisible && (
           <>
-            <Button bg="orangered" onClick={() => openModal(filterGroup)}>
+            <Button bg="amaranth" onClick={() => openModal(filterGroup)}>
               <FaPlus />
             </Button>
-            <Button bg="orangered" mx={2} onClick={() => dispatch(toggleOperator({ filterGroup }))}>
+            <Button bg="amaranth" mx={2} onClick={() => dispatch(toggleOperator({ filterGroup }))}>
               <FaSync />
             </Button>
           </>
         )}
       </Flex>
       {filtersVisible && (
-        <Box bg="#715f5b" color="white" p={3}>
+        <Box bg="wood" color="white" p={3}>
           {filterGroup.children.map((thing, index, array) => {
             if (isGroup(thing)) {
               return (
-                <>
-                  <FilterGroup key={thing.id} filterGroup={thing} openModal={openModal} />
+                <Fragment key={thing.id}>
+                  <FilterGroup filterGroup={thing} openModal={openModal} />
                   {isLastInArray({ index, array }) && <Operator filterGroup={filterGroup} />}
-                </>
+                </Fragment>
               );
             }
             return (
-              <>
-                <Filter key={thing.id} filter={thing} />
+              <Fragment key={thing.id}>
+                <Filter filter={thing} />
                 {isLastInArray({ index, array }) && <Operator filterGroup={filterGroup} />}
-              </>
+              </Fragment>
             );
           })}
         </Box>

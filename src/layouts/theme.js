@@ -1,10 +1,9 @@
 import { mixed } from 'styled-system';
 
-const black = '#000';
-const almostBlack = '#181818';
+const black = '#0C0F0A';
+const wood = '#715E5B';
+const amaranth = '#E83151';
 const pink = 'pink';
-const orangered = 'orangered';
-const lightGray = '#e6e6e6';
 const white = '#fff';
 
 const lineHeights = {
@@ -48,7 +47,7 @@ export default {
     extreme: '0 0 16px rgba(0, 0, 0, .35)',
   },
   borders: {
-    green: `2px solid ${almostBlack}`,
+    green: `2px solid ${black}`,
   },
   fontSizes,
   fontWeights,
@@ -56,10 +55,9 @@ export default {
   fonts,
   colors: {
     black,
-    almostBlack,
+    wood,
     pink,
-    orangered,
-    lightGray,
+    amaranth,
     white,
   },
   // Variants
@@ -96,9 +94,9 @@ export default {
   buttons: {
     borderLeft: {
       ...common.buttons,
-      color: almostBlack,
+      color: black,
       backgroundColor: white,
-      borderLeft: `5px solid ${almostBlack}`,
+      borderLeft: `5px solid ${black}`,
     },
   },
   links: {
@@ -107,7 +105,7 @@ export default {
       color: pink,
       lineHeight: lineHeights.wider,
       '&:hover': {
-        color: orangered,
+        color: amaranth,
       },
     },
   },
