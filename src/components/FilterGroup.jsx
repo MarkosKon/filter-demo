@@ -22,6 +22,24 @@ const Container = styled(Box)`
   min-height: 80px;
 `;
 
+const Operator = ({ filterGroup }) => (
+  <Text variant="wide" p={1} mb={2}>
+    <Box as="span" style={{ display: 'inline-block', minWidth: '45px' }}>
+      {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
+    </Box>
+  </Text>
+);
+
+Operator.propTypes = {
+  filterGroup: PropTypes.shape({
+    type: PropTypes.string,
+    operator: PropTypes.string,
+    children: PropTypes.array,
+  }).isRequired,
+};
+
+const isLastInArray = ({ index, array }) => index !== array.length - 1;
+
 const FilterGroup = ({ filterGroup, parent, openModal }) => {
   const [codeVisible, setCodeVisible] = useState(false);
   const [filtersVisible, setFiltersVisible] = useState(!parent);
@@ -29,23 +47,29 @@ const FilterGroup = ({ filterGroup, parent, openModal }) => {
     liveFilters: { dispatch },
   } = useContext(LiveFilterContext);
   return (
-    <Container px={4} pt={1} pb={3} mb={3} boxShadow="extreme">
+    <Container px={4} pt={5} pb={3} mb={3} boxShadow="extreme">
       <TopRight>
+        <Button bg="orangered" onClick={() => openModal(filterGroup)}>
+          <FaPlus />
+        </Button>
+        <Button bg="orangered" mx={2} onClick={() => dispatch(toggleOperator({ filterGroup }))}>
+          <FaSync />
+        </Button>
         {codeVisible ? (
-          <Button mx={2} bg="black" onClick={() => setCodeVisible(false)}>
+          <Button mr={2} bg="orangered" onClick={() => setCodeVisible(false)}>
             Hide code
           </Button>
         ) : (
-          <Button mx={2} bg="black" onClick={() => setCodeVisible(true)}>
+          <Button mr={2} bg="orangered" onClick={() => setCodeVisible(true)}>
             <FaCode />
           </Button>
         )}
         {!parent ? (
-          <Button bg="black" onClick={() => dispatch(remove({ object: filterGroup }))}>
+          <Button bg="orangered" onClick={() => dispatch(remove({ object: filterGroup }))}>
             <FaTrash />
           </Button>
         ) : (
-          <Button bg="black" onClick={() => setFiltersVisible(!filtersVisible)}>
+          <Button bg="orangered" onClick={() => setFiltersVisible(!filtersVisible)}>
             <FaFilter />
           </Button>
         )}
@@ -60,27 +84,21 @@ const FilterGroup = ({ filterGroup, parent, openModal }) => {
       )}
       {filtersVisible && (
         <Box bg="#715f5b" color="white" p={3}>
-          <Heading as="h4" fontSize={3} p={3}>
-            <Box as="span" style={{ display: 'inline-block', minWidth: '45px' }}>
-              {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
-            </Box>
-            <Button
-              bg="orangered"
-              ml={3}
-              mr={2}
-              onClick={() => dispatch(toggleOperator({ filterGroup }))}
-            >
-              <FaSync />
-            </Button>
-            <Button bg="orangered" onClick={() => openModal(filterGroup)}>
-              <FaPlus />
-            </Button>
-          </Heading>
-          {filterGroup.children.map((thing) => {
+          {filterGroup.children.map((thing, index, array) => {
             if (isGroup(thing)) {
-              return <FilterGroup key={thing.id} filterGroup={thing} openModal={openModal} />;
+              return (
+                <>
+                  <FilterGroup key={thing.id} filterGroup={thing} openModal={openModal} />
+                  {isLastInArray({ index, array }) && <Operator filterGroup={filterGroup} />}
+                </>
+              );
             }
-            return <Filter key={thing.id} filter={thing} />;
+            return (
+              <>
+                <Filter key={thing.id} filter={thing} />
+                {isLastInArray({ index, array }) && <Operator filterGroup={filterGroup} />}
+              </>
+            );
           })}
         </Box>
       )}
