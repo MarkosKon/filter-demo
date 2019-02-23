@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { boxShadow } from 'styled-system';
 
 import {
-  Button, TopRight, Box, Heading, Text,
+  Button, Flex, Box, Text,
 } from './Primitives';
 
 import {
-  FaPlus, FaTrash, FaCode, FaFilter, FaSync,
+  FaPlus, FaTrash, FaFilter, FaSync,
 } from './Icons';
 import Filter from './Filter';
 import { LiveFilterContext, toggleOperator, remove } from '../ducks/live-filters';
@@ -41,47 +41,37 @@ Operator.propTypes = {
 const isLastInArray = ({ index, array }) => index !== array.length - 1;
 
 const FilterGroup = ({ filterGroup, parent, openModal }) => {
-  const [codeVisible, setCodeVisible] = useState(false);
   const [filtersVisible, setFiltersVisible] = useState(!parent);
   const {
     liveFilters: { dispatch },
   } = useContext(LiveFilterContext);
   return (
-    <Container px={4} pt={5} pb={3} mb={3} boxShadow="extreme">
-      <TopRight>
-        <Button bg="orangered" onClick={() => openModal(filterGroup)}>
-          <FaPlus />
-        </Button>
-        <Button bg="orangered" mx={2} onClick={() => dispatch(toggleOperator({ filterGroup }))}>
-          <FaSync />
-        </Button>
-        {codeVisible ? (
-          <Button mr={2} bg="orangered" onClick={() => setCodeVisible(false)}>
-            Hide code
-          </Button>
-        ) : (
-          <Button mr={2} bg="orangered" onClick={() => setCodeVisible(true)}>
-            <FaCode />
-          </Button>
-        )}
-        {!parent ? (
-          <Button bg="orangered" onClick={() => dispatch(remove({ object: filterGroup }))}>
-            <FaTrash />
-          </Button>
-        ) : (
-          <Button bg="orangered" onClick={() => setFiltersVisible(!filtersVisible)}>
+    <Container p={4} mb={3} boxShadow="extreme">
+      <Flex flexWrap="wrap" justifyContent="flex-end" alignItems="center">
+        {parent ? (
+          <Button order={1} bg="orangered" onClick={() => setFiltersVisible(!filtersVisible)}>
             <FaFilter />
           </Button>
+        ) : (
+          <Button
+            order={1}
+            bg="orangered"
+            onClick={() => dispatch(remove({ object: filterGroup }))}
+          >
+            <FaTrash />
+          </Button>
         )}
-      </TopRight>
-      {codeVisible && (
-        <Box my={3} p={2} bg="#715f5b" color="white">
-          <Heading as="h4" fontSize={3}>
-            Raw object:
-          </Heading>
-          <Text as="pre">{JSON.stringify(filterGroup, null, 2)}</Text>
-        </Box>
-      )}
+        {filtersVisible && (
+          <>
+            <Button bg="orangered" onClick={() => openModal(filterGroup)}>
+              <FaPlus />
+            </Button>
+            <Button bg="orangered" mx={2} onClick={() => dispatch(toggleOperator({ filterGroup }))}>
+              <FaSync />
+            </Button>
+          </>
+        )}
+      </Flex>
       {filtersVisible && (
         <Box bg="#715f5b" color="white" p={3}>
           {filterGroup.children.map((thing, index, array) => {
