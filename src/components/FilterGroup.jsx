@@ -6,7 +6,9 @@ import {
   Button, TopRight, Box, Heading, Text,
 } from './Primitives';
 
-import { FaPlus, FaTrash, FaCode } from './Icons';
+import {
+  FaPlus, FaTrash, FaCode, FaFilter,
+} from './Icons';
 import Filter from './Filter';
 import { LiveFilterContext, toggleOperator, remove } from '../ducks/live-filters';
 import { isGroup, hasAndOperator } from '../utils/compare';
@@ -19,38 +21,41 @@ const FilterGroup = ({
   filterGroup, bg, parent, openModal,
 }) => {
   const [codeVisible, setCodeVisible] = useState(false);
+  const [filtersVisible, setFiltersVisible] = useState(!parent);
   const {
     liveFilters: { dispatch },
   } = useContext(LiveFilterContext);
   return (
-    <Container bg={bg} color="white" p={4} mb={3}>
-      <Heading>
+    <Container bg={bg} color="white" p={4} pb={3} mb={3}>
+      <Heading mb={3}>
         {parent ? 'Active Filter object - ' : 'FilterGroup - '}
         <Box as="span" style={{ textDecoration: 'underline' }}>
           {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
         </Box>
       </Heading>
-      <Box my={3}>
-        <Button ml={3} bg="orangered" onClick={() => dispatch(toggleOperator({ filterGroup }))}>
+      <TopRight>
+        <Button bg="black" onClick={() => dispatch(toggleOperator({ filterGroup }))}>
           Toggle
         </Button>
         {codeVisible ? (
-          <Button bg="pink" ml={2} color="black" onClick={() => setCodeVisible(false)}>
+          <Button mx={2} bg="black" onClick={() => setCodeVisible(false)}>
             Hide code
           </Button>
         ) : (
-          <Button bg="pink" ml={2} color="black" onClick={() => setCodeVisible(true)}>
+          <Button mx={2} bg="black" onClick={() => setCodeVisible(true)}>
             <FaCode />
           </Button>
         )}
-      </Box>
-      {!parent && (
-        <TopRight>
+        {!parent ? (
           <Button bg="black" onClick={() => dispatch(remove({ object: filterGroup }))}>
             <FaTrash />
           </Button>
-        </TopRight>
-      )}
+        ) : (
+          <Button bg="black" onClick={() => setFiltersVisible(!filtersVisible)}>
+            <FaFilter />
+          </Button>
+        )}
+      </TopRight>
       {codeVisible && (
         <Box my={3} p={2} bg="#715f5b" color="white">
           <Heading as="h4" fontSize={3}>
@@ -59,20 +64,22 @@ const FilterGroup = ({
           <Text as="pre">{JSON.stringify(filterGroup, null, 2)}</Text>
         </Box>
       )}
-      <Box bg="#715f5b" color="white" p={3}>
-        <Heading as="h4" fontSize={3} p={3}>
-          Children
-          <Button bg="orangered" ml={2} onClick={() => openModal(filterGroup)}>
-            <FaPlus />
-          </Button>
-        </Heading>
-        {filterGroup.children.map((thing) => {
-          if (isGroup(thing)) {
-            return <FilterGroup key={thing.id} filterGroup={thing} openModal={openModal} />;
-          }
-          return <Filter key={thing.id} filter={thing} />;
-        })}
-      </Box>
+      {filtersVisible && (
+        <Box bg="#715f5b" color="white" p={3}>
+          <Heading as="h4" fontSize={3} p={3}>
+            Children
+            <Button bg="orangered" ml={2} onClick={() => openModal(filterGroup)}>
+              <FaPlus />
+            </Button>
+          </Heading>
+          {filterGroup.children.map((thing) => {
+            if (isGroup(thing)) {
+              return <FilterGroup key={thing.id} filterGroup={thing} openModal={openModal} />;
+            }
+            return <Filter key={thing.id} filter={thing} />;
+          })}
+        </Box>
+      )}
     </Container>
   );
 };

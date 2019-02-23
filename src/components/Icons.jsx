@@ -20,6 +20,7 @@ import {
   faTrash,
   faCode,
   faToggleOn,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 
 const FontAwesomeIcon = styled(Base)`
@@ -41,6 +42,7 @@ const FaPlus = props => <FontAwesomeIcon {...props} icon={faPlus} />;
 const FaTrash = props => <FontAwesomeIcon {...props} icon={faTrash} />;
 const FaCode = props => <FontAwesomeIcon {...props} icon={faCode} />;
 const FaToggleOn = props => <FontAwesomeIcon {...props} icon={faToggleOn} />;
+const FaFilter = props => <FontAwesomeIcon {...props} icon={faFilter} />;
 
 export {
   Facebook,
@@ -58,4 +60,5 @@ export {
   FaTrash,
   FaCode,
   FaToggleOn,
+  FaFilter,
 };
