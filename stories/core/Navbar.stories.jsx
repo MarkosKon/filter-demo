@@ -5,17 +5,17 @@ import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { useSpring, animated, useTransition } from 'react-spring';
 
-import { Box, Heading, Centered } from '../src/components/Primitives';
+import { Box, Heading, Centered } from '../../src/components/Primitives';
 import {
   Navbar,
   DesktopList,
   DesktopListEmpty,
   MobileList,
   MobileListEmpty,
-} from '../src/components/Navbar';
-import DYI from '../src/components/DYINavbar';
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
+} from '../../src/components/unused/Navbar';
+import DYI from '../../src/components/unused/DYINavbar';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
 
 const NavbarDecorator = storyFn => (
   <ThemeProvider theme={theme}>

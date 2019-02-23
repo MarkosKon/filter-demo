@@ -5,10 +5,10 @@ import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
 import sal from 'sal.js';
-import { Box, Centered, Heading } from '../src/components/Primitives';
-import Sal from '../src/components/Sal';
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
+import { Box, Centered, Heading } from '../../src/components/Primitives';
+import Sal from '../../src/components/unused/Sal';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
 import 'sal.js/dist/sal.css';
 
 class SalInit extends Component {

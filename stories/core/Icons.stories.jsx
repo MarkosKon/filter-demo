@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import { Centered } from '../src/components/Primitives';
+import { Centered } from '../../src/components/Primitives';
 import {
   Facebook,
   GooglePlus,
@@ -15,9 +15,9 @@ import {
   Envelope,
   Heart,
   FaLink,
-} from '../src/components/Icons';
-import GlobalStyle from '../src/layouts/GlobalStyle';
-import theme from '../src/layouts/theme';
+} from '../../src/components/Icons';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
+import theme from '../../src/layouts/theme';
 
 const IconDecorator = storyFn => (
   <ThemeProvider theme={theme}>

@@ -5,9 +5,9 @@ import { storiesOf } from '@storybook/react';
 
 import {
   Flex, Box, Centered, Heading, Text,
-} from '../src/components/Primitives';
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
+} from '../../src/components/Primitives';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
 
 const GridDecorator = storyFn => (
   <ThemeProvider theme={theme}>

@@ -5,10 +5,10 @@ import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { Card } from 'rebass';
 
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
-import { Box, Centered, Heading } from '../src/components/Primitives';
-import Parallax from '../src/components/Parallax';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
+import { Box, Centered, Heading } from '../../src/components/Primitives';
+import Parallax from '../../src/components/unused/Parallax';
 
 const ParallaxDecorator = storyFn => (
   <ThemeProvider theme={theme}>

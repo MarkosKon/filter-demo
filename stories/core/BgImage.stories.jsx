@@ -5,11 +5,11 @@ import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { ThemeProvider } from 'styled-components';
 
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
-import BgImage from '../src/components/BgImage';
-import { Heading, Centered, Box } from '../src/components/Primitives';
-import { data } from './mock-data/slider-2';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
+import BgImage from '../../src/components/unused/BgImage';
+import { Heading, Centered, Box } from '../../src/components/Primitives';
+import { data } from '../mock-data/slider-2';
 
 const BgImageDecorator = storyFn => (
   <ThemeProvider theme={theme}>

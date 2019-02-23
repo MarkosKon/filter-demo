@@ -7,10 +7,10 @@ import Slider from 'react-slick';
 
 import {
   Box, Centered, Heading, Text, Flex,
-} from '../src/components/Primitives';
-// import Slider from '../src/components/Slider';
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
+} from '../../src/components/Primitives';
+// import Slider from '../../src/components/Slider';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
 
 const sliderSettings = {
   dots: true,

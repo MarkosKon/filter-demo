@@ -4,10 +4,10 @@ import { ThemeProvider } from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import { Box, Centered } from '../src/components/Primitives';
-import Link from '../src/components/Link';
-import GlobalStyle from '../src/layouts/GlobalStyle';
-import theme from '../src/layouts/theme';
+import { Box, Centered } from '../../src/components/Primitives';
+import Link from '../../src/components/Link';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
+import theme from '../../src/layouts/theme';
 
 const LinkDecorator = storyFn => (
   <ThemeProvider theme={theme}>

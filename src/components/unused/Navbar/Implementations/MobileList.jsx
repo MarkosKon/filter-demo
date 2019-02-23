@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Button } from '../../Primitives';
-import { FaTimes } from '../../Icons';
+import { Button } from '../../../Primitives';
+import { FaTimes } from '../../../Icons';
 
 const MobileListContainer = styled.div`
   background-color: ${({ bc }) => bc};

@@ -4,9 +4,9 @@ import { ThemeProvider } from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import { Text, Centered } from '../src/components/Primitives';
-import theme from '../src/layouts/theme';
-import GlobalStyle from '../src/layouts/GlobalStyle';
+import { Text, Centered } from '../../src/components/Primitives';
+import theme from '../../src/layouts/theme';
+import GlobalStyle from '../../src/layouts/GlobalStyle';
 
 const TextDecorator = storyFn => (
   <ThemeProvider theme={theme}>
