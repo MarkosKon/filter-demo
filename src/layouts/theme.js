@@ -45,6 +45,7 @@ export default {
     small: '0 0 4px rgba(0, 0, 0, .125)',
     large: '0 0 24px rgba(0, 0, 0, .125)',
     hard: '0 0 16px rgba(0, 0, 0, .25)',
+    extreme: '0 0 16px rgba(0, 0, 0, .35)',
   },
   borders: {
     green: `2px solid ${almostBlack}`,

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { boxShadow } from 'styled-system';
 
 import {
   Button, TopRight, Box, Heading, Text,
@@ -14,19 +15,20 @@ import { LiveFilterContext, toggleOperator, remove } from '../ducks/live-filters
 import { isGroup, hasAndOperator } from '../utils/compare';
 
 const Container = styled(Box)`
+  ${boxShadow}
   position: relative;
+  background-color: #715e5b;
+  color: white;
 `;
 
-const FilterGroup = ({
-  filterGroup, bg, parent, openModal,
-}) => {
+const FilterGroup = ({ filterGroup, parent, openModal }) => {
   const [codeVisible, setCodeVisible] = useState(false);
   const [filtersVisible, setFiltersVisible] = useState(!parent);
   const {
     liveFilters: { dispatch },
   } = useContext(LiveFilterContext);
   return (
-    <Container bg={bg} color="white" p={4} pb={3} mb={3}>
+    <Container p={4} pb={3} mb={3} boxShadow="extreme">
       <Heading mb={3}>
         {parent ? 'Active Filter object - ' : 'FilterGroup - '}
         <Box as="span" style={{ textDecoration: 'underline' }}>
@@ -90,13 +92,11 @@ FilterGroup.propTypes = {
     operator: PropTypes.string,
     children: PropTypes.array,
   }).isRequired,
-  bg: PropTypes.string,
   parent: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
 };
 
 FilterGroup.defaultProps = {
-  bg: '#433633',
   parent: false,
 };
 export default FilterGroup;

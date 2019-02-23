@@ -41,7 +41,6 @@ const IndexPage = () => {
       <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
       <FilterGroup
         filterGroup={liveFilters}
-        bg="#2d2d2d"
         parent
         openModal={(initiator) => {
           setModalInitiator(initiator);
