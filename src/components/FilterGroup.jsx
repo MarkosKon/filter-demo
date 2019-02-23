@@ -22,8 +22,15 @@ const Container = styled(Box)`
 `;
 
 const Operator = ({ filterGroup }) => (
-  <Text variant="wide" p={1} mb={2}>
-    <Box as="span" style={{ display: 'inline-block', minWidth: '45px' }}>
+  <Text fontSize={5} mb={2} fontWeight="bold">
+    <Box
+      as="span"
+      py={2}
+      px={3}
+      mb={2}
+      bg="black"
+      style={{ display: 'inline-block', minWidth: '45px', borderRadius: '5px' }}
+    >
       {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
     </Box>
   </Text>
