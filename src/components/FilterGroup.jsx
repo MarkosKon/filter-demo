@@ -8,7 +8,7 @@ import {
 } from './Primitives';
 
 import {
-  FaPlus, FaTrash, FaCode, FaFilter,
+  FaPlus, FaTrash, FaCode, FaFilter, FaSync,
 } from './Icons';
 import Filter from './Filter';
 import { LiveFilterContext, toggleOperator, remove } from '../ducks/live-filters';
@@ -19,6 +19,7 @@ const Container = styled(Box)`
   position: relative;
   background-color: #715e5b;
   color: white;
+  min-height: 80px;
 `;
 
 const FilterGroup = ({ filterGroup, parent, openModal }) => {
@@ -28,17 +29,8 @@ const FilterGroup = ({ filterGroup, parent, openModal }) => {
     liveFilters: { dispatch },
   } = useContext(LiveFilterContext);
   return (
-    <Container p={4} pb={3} mb={3} boxShadow="extreme">
-      <Heading mb={3}>
-        {parent ? 'Active Filter object - ' : 'FilterGroup - '}
-        <Box as="span" style={{ textDecoration: 'underline' }}>
-          {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
-        </Box>
-      </Heading>
+    <Container px={4} pt={1} pb={3} mb={3} boxShadow="extreme">
       <TopRight>
-        <Button bg="black" onClick={() => dispatch(toggleOperator({ filterGroup }))}>
-          Toggle
-        </Button>
         {codeVisible ? (
           <Button mx={2} bg="black" onClick={() => setCodeVisible(false)}>
             Hide code
@@ -69,8 +61,18 @@ const FilterGroup = ({ filterGroup, parent, openModal }) => {
       {filtersVisible && (
         <Box bg="#715f5b" color="white" p={3}>
           <Heading as="h4" fontSize={3} p={3}>
-            Children
-            <Button bg="orangered" ml={2} onClick={() => openModal(filterGroup)}>
+            <Box as="span" style={{ display: 'inline-block', minWidth: '45px' }}>
+              {hasAndOperator(filterGroup) ? 'AND' : 'OR'}
+            </Box>
+            <Button
+              bg="orangered"
+              ml={3}
+              mr={2}
+              onClick={() => dispatch(toggleOperator({ filterGroup }))}
+            >
+              <FaSync />
+            </Button>
+            <Button bg="orangered" onClick={() => openModal(filterGroup)}>
               <FaPlus />
             </Button>
           </Heading>
