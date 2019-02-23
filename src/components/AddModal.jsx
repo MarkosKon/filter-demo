@@ -9,6 +9,7 @@ import {
 } from './Primitives';
 import { LiveFilterContext, add } from '../ducks/live-filters';
 import { predefinedFilters } from '../data';
+import DIYFilterForm from './DIYFilterForm';
 
 const modalStyles = {
   content: { backgroundColor: 'pink' },
@@ -44,28 +45,16 @@ const AddModal = (props) => {
       };
     });
   }, ONCE);
-
   return (
     <Modal {...props} style={modalStyles} contentLabel="Add filter or filtergroups">
       <Centered>
         <Box>
-          <Heading textAlign="center">Add Filter or FilterGroup</Heading>
-          <Box p={4}>
+          <Heading textAlign="center" pb={4}>
+            Add Group or Filter
+          </Heading>
+          <Box py={3}>
             <Heading as="h3" mb={3}>
-              - Filter
-            </Heading>
-            <ReactSelect
-              placeholder="Predefined filters"
-              options={predefinedFilterOptions.current}
-              onChange={({ object }) => {
-                dispatch(add({ filterGroup: modalInitiator, thingToAdd: object }));
-                onRequestClose();
-              }}
-            />
-          </Box>
-          <Box p={4}>
-            <Heading as="h3" mb={3}>
-              - Filter group
+              - Group
             </Heading>
             <Button
               bg="black"
@@ -87,6 +76,25 @@ const AddModal = (props) => {
             >
               Add empty group
             </Button>
+          </Box>
+          <Box py={3}>
+            <Heading as="h3" mb={3}>
+              - Predefined Filter
+            </Heading>
+            <ReactSelect
+              placeholder="Predefined filters"
+              options={predefinedFilterOptions.current}
+              onChange={({ object }) => {
+                dispatch(add({ filterGroup: modalInitiator, thingToAdd: object }));
+                onRequestClose();
+              }}
+            />
+          </Box>
+          <Box py={3}>
+            <Heading as="h3" mb={3}>
+              - DIY Filter
+            </Heading>
+            <DIYFilterForm handleSubmit={() => {}} />
           </Box>
         </Box>
       </Centered>

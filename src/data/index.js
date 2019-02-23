@@ -92,3 +92,15 @@ export const products = [
     year: 2016,
   },
 ];
+
+export const properties = ['name', 'brand', 'cost', 'year'];
+export const operations = ['EQUALS', 'MORE_THAN', 'LESS_THAN'];
+
+// const result = products.reduce((acc, product) => {
+//   const keys = Object.keys(product);
+//   console.log(keys);
+// }, []);
+
+// {
+//   'brand': ['Xiaomi', 'Apple'],
+// },
