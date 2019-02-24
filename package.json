@@ -13,7 +13,9 @@
     "format": "prettier-eslint --write \"src/**/*.{js,jsx}\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "storybook": "start-storybook -s ./public -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "deploy": "netlify deploy --dir=public",
+    "deploy:prod": "netlify deploy --dir=public --prod"
   },
   "husky": {
     "hooks": {
