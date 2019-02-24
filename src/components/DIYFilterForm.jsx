@@ -28,8 +28,19 @@ const DIYFilterForm = ({ handleSubmit }) => {
   const [operation, setOperation] = useState(operationOptions[0]);
   const [filterValue, setFilterValue] = useState('');
 
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const float = parseFloat(value);
+    if (Number.isNaN(float)) setFilterValue(value);
+    else setFilterValue(float);
+  };
+
   return (
-    <form onSubmit={e => e.preventDefault() || handleSubmit}>
+    <form
+      onSubmit={e => e.preventDefault()
+        || handleSubmit({ property: property.value, operation: operation.value, filterValue })
+      }
+    >
       <ReactSelect
         placeholder="property"
         options={propertyOptions}
@@ -47,7 +58,7 @@ const DIYFilterForm = ({ handleSubmit }) => {
         type="text"
         placeholder="value"
         value={filterValue}
-        onChange={e => setFilterValue(e.target.value)}
+        onChange={handleChange}
         required
       />
       <Button type="submit" bg="black" mt={3}>

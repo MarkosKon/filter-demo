@@ -94,7 +94,19 @@ const AddModal = (props) => {
             <Heading as="h3" mb={3}>
               - DIY Filter
             </Heading>
-            <DIYFilterForm handleSubmit={() => {}} />
+            <DIYFilterForm
+              handleSubmit={({ property, operation, filterValue }) => {
+                const thingToAdd = {
+                  type: 'FILTER',
+                  id: createId(),
+                  field: property,
+                  operation,
+                  value: filterValue,
+                };
+                dispatch(add({ filterGroup: modalInitiator, thingToAdd }));
+                onRequestClose();
+              }}
+            />
           </Box>
         </Box>
       </Centered>
